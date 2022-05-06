@@ -1,14 +1,14 @@
 /*---generate keyboard---*/
+import keys_inRow from './keyRow.js';
 
-function appendElement(AddElem, AddClass, AddPlace, id='', text='', times=1) {
-    for (let i = 0; i < times; i++) {
-        const newElement = document.createElement(AddElem);
-        if (Array.isArray(AddClass)) AddClass.forEach(el => newElement.classList.add(el))
-        else newElement.classList.add(AddClass);
-        if (id !== '') newElement.id = id;
-        AddPlace.append(newElement);
-        if (text !== '') newElement.append(text)
-    }
+function appendElement(AddElem, AddClass, AddPlace, id='', text='') {
+    const newElement = document.createElement(AddElem);
+    if (Array.isArray(AddClass)) AddClass.forEach(el => newElement.classList.add(el))
+    else newElement.classList.add(AddClass);
+    if (id !== '') newElement.id = id;
+    AddPlace.append(newElement);
+    if (text !== '') newElement.append(text)
+    return newElement
 }
 
 function generatepage() {
@@ -26,10 +26,17 @@ function generatepage() {
 function generateboard() {
     const keyboard = document.querySelector('.keyboard');
     keyboard.addEventListener('click', pressWebKey)
-    appendElement('div', 'keyboardRow', keyboard, '', '', 5)
+    for (let i = 0; i < 5; i++) appendElement('div', 'keyboardRow', keyboard)
     const keyboardRow = document.querySelectorAll('.keyboardRow');
-    for (let i = 1; i < 4; i++) {
-        appendElement('div', ['graykey', 'key'], keyboardRow[0], `Digit${i}`)
+    for (let k = 0; k < 5; k++) {
+        let data = keys_inRow[k];
+        for (let i = 0; i < data.length; i++) {
+            let newKey = appendElement('div', data[i].type, keyboardRow[k], data[i].id);
+            let newKeyEn = appendElement('span', 'en', newKey);
+            if ('caseDown' in data[i]) appendElement('span', 'caseDown', newKeyEn, '', data[i].caseDown);
+            if ('caseUp' in data[i]) appendElement('span', 'caseUp', newKeyEn, '', data[i].caseUp);
+            if ('caseSpecial' in data[i]) appendElement('span', 'caseSpecial', newKeyEn, '', data[i].caseSpecial);
+        }
     }
 }
 
