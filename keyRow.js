@@ -4,7 +4,9 @@ const keys_inRow = [
             type: ['Backquote', 'key'],
             id: 'Backquote',
             caseDown: '`',
-            caseUp: '~'
+            caseUp: '~',
+            caseDownGe: '„',
+            caseUpGe: '“'
         },
         {
             type: ['graykey', 'key'],
@@ -93,52 +95,65 @@ const keys_inRow = [
         {
             type: ['graykey', 'key'],
             id: 'KeyQ',
-            caseDown: 'Q'
+            caseDown: 'Q',
+            caseDownGe: 'ქ'
         },
         {
             type: ['graykey', 'key'],
             id: 'KeyW',
-            caseDown: 'W'
+            caseDown: 'W',
+            caseDownGe: 'წ',
+            caseUpGe: 'ჭ'
         },
         {
             type: ['graykey', 'key'],
             id: 'KeyE',
-            caseDown: 'E'
+            caseDown: 'E',
+            caseDownGe: 'ე'
         },
         {
             type: ['graykey', 'key'],
             id: 'KeyR',
-            caseDown: 'R'
+            caseDown: 'R',
+            caseDownGe: 'რ',
+            caseUpGe: 'ღ'
         },
         {
             type: ['graykey', 'key'],
             id: 'KeyT',
-            caseDown: 'T'
+            caseDown: 'T',
+            caseDownGe: 'ტ',
+            caseUpGe: 'თ'
         },
         {
             type: ['graykey', 'key'],
             id: 'KeyY',
-            caseDown: 'Y'
+            caseDown: 'Y',
+            caseDownGe: 'ყ'
         },
         {
             type: ['graykey', 'key'],
             id: 'KeyU',
-            caseDown: 'U'
+            caseDown: 'U',
+            caseDownGe: 'უ'
         },
         {
             type: ['graykey', 'key'],
             id: 'KeyI',
-            caseDown: 'I'
+            caseDown: 'I',
+            caseDownGe: 'ი'
         },
         {
             type: ['graykey', 'key'],
             id: 'KeyO',
-            caseDown: 'O'
+            caseDown: 'O',
+            caseDownGe: 'ო'
         },
         {
             type: ['graykey', 'key'],
             id: 'KeyP',
-            caseDown: 'P'
+            caseDown: 'P',
+            caseDownGe: 'პ'
         },
         {
             type: ['graykey', 'key'],
@@ -156,7 +171,8 @@ const keys_inRow = [
             type: ['graykey', 'key'],
             id: 'Backslash',
             caseDown: '\/',
-            caseUp: '|'
+            caseUp: '|',
+            caseDownGe: '~'
         },
         {
             type: ['darkkey', 'Delete', 'key'],
@@ -173,47 +189,59 @@ const keys_inRow = [
         {
             type: ['graykey', 'key'],
             id: 'KeyA',
-            caseDown: 'A'
+            caseDown: 'A',
+            caseDownGe: 'ა'
         },
         {
             type: ['graykey', 'key'],
             id: 'KeyS',
-            caseDown: 'S'
+            caseDown: 'S',
+            caseDownGe: 'ს',
+            caseUpGe: 'შ'
         },
         {
             type: ['graykey', 'key'],
             id: 'KeyD',
-            caseDown: 'D'
+            caseDown: 'D',
+            caseDownGe: 'დ'
         },
         {
             type: ['graykey', 'key'],
             id: 'KeyF',
-            caseDown: 'F'
+            caseDown: 'F',
+            caseDownGe: 'ფ'
         },
         {
             type: ['graykey', 'key'],
             id: 'KeyG',
-            caseDown: 'G'
+            caseDown: 'G',
+            caseDownGe: 'გ'
         },
         {
             type: ['graykey', 'key'],
             id: 'KeyH',
-            caseDown: 'H'
+            caseDown: 'H',
+            caseDownGe: 'ჰ'
         },
         {
             type: ['graykey', 'key'],
             id: 'KeyJ',
-            caseDown: 'J'
+            caseDown: 'J',
+            caseDownGe: 'ჯ',
+            caseUpGe: 'ჟ'
         },
         {
             type: ['graykey', 'key'],
             id: 'KeyK',
-            caseDown: 'K'
+            caseDown: 'K',
+            caseDownGe: 'კ'
         },
         {
             type: ['graykey', 'key'],
             id: 'KeyL',
-            caseDown: 'L'
+            caseDown: 'L',
+            caseDownGe: 'ლ',
+            caseUpGe: '₾'
         },
         {
             type: ['graykey', 'key'],
@@ -242,37 +270,46 @@ const keys_inRow = [
         {
             type: ['graykey', 'key'],
             id: 'KeyZ',
-            caseDown: 'Z'
+            caseDown: 'Z',
+            caseDownGe: 'ზ',
+            caseUpGe: 'ძ'
         },
         {
             type: ['graykey', 'key'],
             id: 'KeyX',
-            caseDown: 'X'
+            caseDown: 'X',
+            caseDownGe: 'ხ'
         },
         {
             type: ['graykey', 'key'],
             id: 'KeyC',
-            caseDown: 'C'
+            caseDown: 'C',
+            caseDownGe: 'ც',
+            caseUpGe: 'ჩ'
         },
         {
             type: ['graykey', 'key'],
             id: 'KeyV',
-            caseDown: 'V'
+            caseDown: 'V',
+            caseDownGe: 'ვ'
         },
         {
             type: ['graykey', 'key'],
             id: 'KeyB',
-            caseDown: 'B'
+            caseDown: 'B',
+            caseDownGe: 'ბ'
         },
         {
             type: ['graykey', 'key'],
             id: 'KeyN',
-            caseDown: 'N'
+            caseDown: 'N',
+            caseDownGe: 'ნ'
         },
         {
             type: ['graykey', 'key'],
             id: 'KeyM',
-            caseDown: 'M'
+            caseDown: 'M',
+            caseDownGe: 'მ'
         },
         {
             type: ['graykey', 'key'],
@@ -321,7 +358,8 @@ const keys_inRow = [
         },
         {
             type: ['graykey', 'Space', 'key'],
-            id: 'Space'
+            id: 'Space',
+            caseSpecial: ' '
         },
         {
             type: ['darkkey', 'AltRight', 'key'],
