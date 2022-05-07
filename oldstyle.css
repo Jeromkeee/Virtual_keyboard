@@ -229,7 +229,7 @@ body {
 }
 
 .field {
-    font-family: 'Montserrat';
+    font-family: 'Montserrat','NotoSansGeorgian';
     font-weight: 600;
     width: 600px;
     height: 350px;

@@ -80,7 +80,7 @@ function pressWebKey(event) {
 function pressKeyDown(event) {
     document.getElementById(event.code).classList.add('active');
     let eventObj = keys_inRow.flat().find(el => el.id == event.code);
-    if (event.ctrlKey&&event.shiftKey) switchLang();
+    if (event.ctrlKey && event.shiftKey) switchLang();
     if (event.code == 'CapsLock') switchCaps();
     typing(event, eventObj);
 }
@@ -92,26 +92,78 @@ function pressKeyUp(event) {
 function typing(event, eventObj) {
     const inputField = document.querySelector('.field');
     inputField.focus();
-    let noPreventList = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'];
-    if (!noPreventList.includes(eventObj.id)) event.preventDefault();
-    /*let preventList = ['Space', 'Tab', 'Enter', 'Backspace', 'Delete', 'ShiftLeft', 'ShiftRight', 'AltLeft', 'AltRight', 'ControlLeft', 'ControlRight', 'MetaLeft'];*/
+    let arrowList = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'];
+    event.preventDefault();
+
+    function addSymb(symbol) {
+        const pos = inputField.selectionStart;
+        const before = inputField.value.slice(0, pos);
+        const after = inputField.value.slice(pos);
+        inputField.value = before + symbol + after;
+        inputField.setSelectionRange(pos + 1, pos + 1);
+    }
+
+    function delSymb(type) {
+        const pos = inputField.selectionStart;
+        const before = inputField.value.slice(0, pos);
+        const after = inputField.value.slice(pos);
+        if (type == 'left') {
+            inputField.value = before.slice(0, -1) + after;
+            inputField.setSelectionRange(pos - 1, pos - 1);
+        }
+        if (type == 'right') {
+            inputField.value = before + after.slice(1);
+            inputField.setSelectionRange(pos, pos);
+        }
+    }
+
+    function moveSel(eventObj) {
+        const pos = inputField.selectionStart;
+        
+        function beforeSel(sel) {
+            let before = inputField.value.slice(0, sel).split('').reverse().join('').indexOf('\n');
+            if (before < 0) before = inputField.value.slice(0, sel).length;
+            return before
+        }
+
+        function afterSel(sel) {
+            let after = inputField.value.slice(sel).indexOf('\n');
+            if (after < 0) after = inputField.value.slice(sel).length;
+            return after
+        }
+
+        const before = beforeSel(pos);
+        const after = afterSel(pos);
+        const beforeBefore = beforeSel(pos - before - 1);
+        const afterAfter = afterSel(pos + after + 1);
+        const posUp = pos - before - 1 - beforeBefore + Math.min(before, beforeBefore)
+        const posDown = pos + after + 1 + Math.min(before, afterAfter)
+        
+        if (eventObj.id == 'ArrowLeft') inputField.setSelectionRange(pos - 1, pos - 1);
+        if (eventObj.id == 'ArrowRight') inputField.setSelectionRange(pos + 1, pos + 1);
+        if (eventObj.id == 'ArrowUp') inputField.setSelectionRange(posUp, posUp);
+        if (eventObj.id == 'ArrowDown') inputField.setSelectionRange(posDown, posDown);
+    }
+
     if ('caseSpecial' in eventObj) {
-        if (eventObj.id == 'Space') inputField.value += ' ';
-        if (eventObj.id == 'Tab') inputField.value += '    ';
-        if (eventObj.id == 'Enter') inputField.value += '\n';
-        if (eventObj.id == 'Backspace') inputField.value = inputField.value.slice(0, -1);
+        if (eventObj.id == 'Space') addSymb(' ');
+        if (eventObj.id == 'Tab') addSymb('    ');
+        if (eventObj.id == 'Enter') addSymb('\n');
+        if (eventObj.id == 'Backspace') delSymb('left');
+        if (eventObj.id == 'Delete') delSymb('right');
+        if (arrowList.includes(eventObj.id)) moveSel(eventObj);
     } else {
         let keyMid = eventObj.caseDown;
         let keyTop = ('caseUp' in eventObj) ? eventObj.caseUp : '';
         if (language == 'ge' && 'caseDownGe' in eventObj) keyMid = eventObj.caseDownGe
         if (language == 'ge' && 'caseUpGe' in eventObj) keyTop = eventObj.caseUpGe
         if (event.shiftKey) {
-            if (capslock == 'on') keyMid = keyMid.toLowerCase()
-            if (language == 'en' && eventObj.id.includes('Key')) inputField.value += keyMid
-            else inputField.value += keyTop
+            if (capslock == 'on') keyMid = keyMid.toLowerCase();
+            if (language == 'en' && eventObj.id.includes('Key')) addSymb(keyMid)
+            else addSymb(keyTop);
         } else {
-            if (capslock == 'off') keyMid = keyMid.toLowerCase()
-            inputField.value += keyMid
+            if (capslock == 'off') keyMid = keyMid.toLowerCase();
+            addSymb(keyMid);
         }
     }
 }
@@ -126,10 +178,10 @@ function switchLang() {
     const geKeys = document.querySelectorAll('.ge');
     if (language == 'en') {
         enKeys.forEach(el=>el.classList.add('hide'));
-        geKeys.forEach(el=>el.classList.remove('hide'))
+        geKeys.forEach(el=>el.classList.remove('hide'));
         language = 'ge';
     } else {
-        geKeys.forEach(el=>el.classList.add('hide'))
+        geKeys.forEach(el=>el.classList.add('hide'));
         enKeys.forEach(el=>el.classList.remove('hide'));
         language = 'en';
     }
