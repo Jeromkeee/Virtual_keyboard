@@ -1,8 +1,29 @@
-/*---generate keyboard---*/
-import keys_inRow from './keyRow.js';
+/*---local Storage---*/
 
 let language = 'en';
 let capslock = 'off';
+
+function setLocalStorage() {
+    localStorage.setItem('language', language);
+    localStorage.setItem('capslock', capslock);
+}
+
+window.addEventListener('beforeunload', setLocalStorage);
+
+function getLocalStorage() {
+    if (localStorage.getItem('language')) {
+        language = localStorage.getItem('language');
+    }
+    if (localStorage.getItem('capslock')) {
+        capslock = localStorage.getItem('capslock');
+    }
+}
+
+window.addEventListener('load', getLocalStorage);
+
+/*---generate keyboard---*/
+
+import keys_inRow from './keyRow.js';
 
 function appendElement(AddElem, AddClass, AddPlace, id='', text='') {
     const newElement = document.createElement(AddElem);
@@ -35,8 +56,10 @@ function generateboard() {
         let data = keys_inRow[k];
         for (let i = 0; i < data.length; i++) {
             let newKey = appendElement('div', data[i].type, keyboardRow[k], data[i].id);
-            let newKeyEn = appendElement('span', 'en', newKey);
-            let newKeyGe = appendElement('span', ['ge', 'hide'], newKey);
+            let langArr = ['en', ['ge', 'hide']];
+            if (language == 'ge') langArr = [['en', 'hide'], 'ge'];
+            let newKeyEn = appendElement('span', langArr[0], newKey);
+            let newKeyGe = appendElement('span', langArr[1], newKey);
             
             if ('caseDown' in data[i]) {
                 appendElement('span', 'caseDown', newKeyEn, '', data[i].caseDown);
@@ -61,7 +84,9 @@ function generateboard() {
         }
     }
     const caps = document.querySelector('.CapsLock');
-    appendElement('div', ['capseye', 'hide'], caps);
+    let capsArr = ['capseye', 'hide'];
+    if (capslock == 'on') langArr = 'capseye';
+    appendElement('div', capsArr, caps);
 }
 
 window.addEventListener('load', generatepage);
