@@ -85,7 +85,7 @@ function generateboard() {
     }
     const caps = document.querySelector('.CapsLock');
     let capsArr = ['capseye', 'hide'];
-    if (capslock == 'on') langArr = 'capseye';
+    if (capslock == 'on') capsArr = 'capseye';
     appendElement('div', capsArr, caps);
 }
 
@@ -126,6 +126,7 @@ function typing(event, eventObj) {
         const after = inputField.value.slice(pos);
         inputField.value = before + symbol + after;
         inputField.setSelectionRange(pos + 1, pos + 1);
+        if (event.code == 'Tab') inputField.setSelectionRange(pos + 3, pos + 3);
     }
 
     function delSymb(type) {
@@ -134,7 +135,8 @@ function typing(event, eventObj) {
         const after = inputField.value.slice(pos);
         if (type == 'left') {
             inputField.value = before.slice(0, -1) + after;
-            inputField.setSelectionRange(pos - 1, pos - 1);
+            if (pos == 0) inputField.setSelectionRange(0, 0)
+            else inputField.setSelectionRange(pos - 1, pos - 1);
         }
         if (type == 'right') {
             inputField.value = before + after.slice(1);
@@ -164,7 +166,8 @@ function typing(event, eventObj) {
         const posUp = pos - before - 1 - beforeBefore + Math.min(before, beforeBefore)
         const posDown = pos + after + 1 + Math.min(before, afterAfter)
         
-        if (eventObj.id == 'ArrowLeft') inputField.setSelectionRange(pos - 1, pos - 1);
+        if (eventObj.id == 'ArrowLeft' && pos > 0) inputField.setSelectionRange(pos - 1, pos - 1)
+        else inputField.setSelectionRange(0, 0);
         if (eventObj.id == 'ArrowRight') inputField.setSelectionRange(pos + 1, pos + 1);
         if (eventObj.id == 'ArrowUp') inputField.setSelectionRange(posUp, posUp);
         if (eventObj.id == 'ArrowDown') inputField.setSelectionRange(posDown, posDown);
